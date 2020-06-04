@@ -1,0 +1,140 @@
+{
+  "name": "react-typescript-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^24.0.0",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.1.0",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "chart.js": "^2.9.3",
+    "dotenv": "^8.2.0",
+    "env-cmd": "^10.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "jest-transform-css": "^2.0.0",
+    "lint-staged": "^10.2.7",
+    "moment": "^2.26.0",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.1",
+    "react-chartjs-2": "^2.9.0",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-batched-actions": "^0.5.0",
+    "redux-thunk": "^2.3.0",
+    "ts-jest": "^26.1.0",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.3.0",
+    "tslint-react": "^5.0.0",
+    "typescript": "~3.7.2"
+  },
+  "scripts": {
+    "start": "env-cmd -f .env react-scripts start",
+    "build:dev": "env-cmd -f .env.dev react-scripts build",
+    "build:local": "env-cmd -f .env.local react-scripts build",
+    "build:test": "env-cmd -f .env.test react-scripts build",
+    "build:prod": "env-cmd -f .env.prod react-scripts build",
+    "eject": "react-scripts eject",
+    "test": "jest",
+    "test:cov": "yarn test --coverage --watchAll=false",
+    "test:ci": "yarn test --coverage --watchAll=false",
+    "test:watch": "yarn test --watch",
+    "lint": "tslint 'src/**/*.{ts,tsx,js}'"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "prettier --write",
+      "tslint 'src/**/*.{ts,tsx,js}' --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test:ci"
+    }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node",
+      "css"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "jest-transform-css"
+    },
+    "rootDir": "src",
+    "testRegex": ".*\\.test.(ts|tsx)$",
+    "transform": {
+      "^.+\\.(tsx|ts)?$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "./setupTests.ts"
+    ],
+    "collectCoverageFrom": [
+      "./**/*.{js,jsx,ts,tsx}",
+      "!./**/*.d.ts",
+      "!index.tsx",
+      "!App.tsx",
+      "!./**/*.type.tsx",
+      "!./**/*.container.ts",
+      "!serviceWorker.ts",
+      "!./library/types/**/*.*",
+      "!library/common/constants/**/*.*",
+      "!core/**/*.*"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 10,
+        "functions": 10,
+        "lines": 10,
+        "statements": 10
+      }
+    }
+  },
+  "devDependencies": {
+    "tslint-config-airbnb": "^5.11.2"
+  }
+}

@@ -1,0 +1,16 @@
+.button {
+  border: none;
+  padding: 0.8em 3em;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.9em;
+
+  &.button--primary {
+    background-color: #f3c400;
+  }
+  &.button--secondary {
+    background-color: black;
+    color: white;
+  }
+}
