@@ -2,7 +2,7 @@
 
 Basic boilerplate of **create-react-app** with **typescript**. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-[Link to RULEBOOK](https://github.com/ivukusic/react-typescript-boilerplate/blob/master/RULEBOOK.md) - basic rules and branching strategy for frontend application (React or similar to React Native)
+[Link to RULEBOOK](RULEBOOK.md) - basic rules and branching strategy for frontend application (React or similar to React Native)
 
 ## Features
 

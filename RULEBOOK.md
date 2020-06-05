@@ -1,10 +1,8 @@
 # Rulebook for React and React Native
 
-<!-- TOC -->
-
 - [**Rules**](#rules)
 
-  - [**Tslint + Prettier**](#tslint-prettier)
+  - [**TSlint Prettier**](#tslint-prettier)
   - [**Functional components**](#functional-components)
   - [**Object destructuring**](#object-destructuring)
   - [**Naming convention**](#naming-convention)
@@ -20,11 +18,10 @@
   - [**Naming convention**](#naming-convention)
 
 - [**Project structure**](#project-structure)
-  <!-- /TOC -->
 
 ## Rules
 
-##### TSLint + Prettier
+##### TSlint Prettier
 
 Every project has to have **prettier** and **tslint** included. Also we have to have implemented **husky** to take care of our pre-commit hooks. We have to take care of that, so every developer follows certain guidelines, to make sure of coding standards and similarity in our code.
 
