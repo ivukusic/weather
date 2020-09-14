@@ -35,19 +35,24 @@ export const getWeatherData = () => async (dispatch, getState): Promise<void> =>
   }
   for (let i = 0; i < cities.length; i++) {
     if (!weather[cities[i].fields.accentcity]) {
-      try {
-        const url = `${URLS.weatherCity(cities[i].fields.accentcity)}`;
-        const { status, data }: { status: number; data: any } = await axiosInstance.get(url);
-        if (status === 200) {
-          weather = { ...weather, [cities[i].fields.accentcity]: data };
-          dispatch({
-            type: TYPE_SET_WEATHER,
-            payload: weather,
-          });
-        }
-      } catch (e) {
-        console.log(e);
+      const { success, data } = await getWeatherDataByCity(cities[i].fields.accentcity);
+      if (success) {
+        weather = { ...weather, [cities[i].fields.accentcity]: data };
+        dispatch({
+          type: TYPE_SET_WEATHER,
+          payload: weather,
+        });
       }
     }
+  }
+};
+
+export const getWeatherDataByCity = async (city): Promise<any> => {
+  try {
+    const url = `${URLS.weatherCity(city)}`;
+    const { status, data }: { status: number; data: any } = await axiosInstance.get(url);
+    return { success: status === 200, data };
+  } catch (e) {
+    return { success: false };
   }
 };

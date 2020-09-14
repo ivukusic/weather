@@ -20,11 +20,11 @@ export const TextInput = ({
   type,
   value,
 }: ITextInputProps): JSX.Element => {
-  const onChangeValue = event => {
-    if (onChange) {
-      onChange(event.target.value);
-    }
-  };
+  // const onChangeValue = event => {
+  //   if (onChange) {
+  //     onChange(event.target.value);
+  //   }
+  // };
 
   return (
     <div
@@ -43,7 +43,7 @@ export const TextInput = ({
         disabled={disabled}
         type={type}
         onBlur={onBlur}
-        onChange={onChangeValue}
+        onChange={onChange}
         onFocus={onFocus}
         placeholder={placeholder}
         value={value}
