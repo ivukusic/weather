@@ -10,7 +10,7 @@ import { ICityProps } from './City.type';
 
 import './City.style.scss';
 
-const City = ({ getWeatherDataByCity, weather }: ICityProps): JSX.Element | null => {
+const City = ({ getWeatherDataByCity, saveNotes, weather }: ICityProps): JSX.Element | null => {
   const { city } = useParams<{ city: string }>();
 
   const currentWeather = weather[city];
@@ -21,7 +21,9 @@ const City = ({ getWeatherDataByCity, weather }: ICityProps): JSX.Element | null
     }
   }, [city, getWeatherDataByCity, weather]);
 
-  const onNotesChange = () => {};
+  const onNotesChange = (event: any) => {
+    saveNotes(city, event.target.value);
+  };
 
   const onHeartClick = () => {};
 

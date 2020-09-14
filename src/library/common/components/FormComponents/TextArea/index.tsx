@@ -15,41 +15,28 @@ export const TextArea = ({
   rows,
   testID,
   value,
-}: ITextAreaProps): JSX.Element => {
-  const onChangeValue = event => {
-    if (onChange) {
-      onChange(event.target.value);
-    }
-  };
+}: ITextAreaProps): JSX.Element => (
+  <div
+    className={`d-flex flex-column textarea${secondary ? ` textarea--secondary` : ''}${
+      className ? ` ${className}` : ''
+    }`}
+    data-text={testID}
+  >
+    {label && (
+      <div className="d-flex justify-content-between">
+        <label className="textarea_label">{label}</label>
+        {!!maxLength && (
+          <div className={`textarea_max-length${value.length > maxLength ? ' textarea_max-length--error' : ''}`}>
+            {value.length}/{maxLength}
+          </div>
+        )}
+      </div>
+    )}
+    <textarea className="textarea_textarea" onChange={onChange} placeholder={placeholder} value={value} rows={rows} />
+    <div className="error-message error-message--right">{error && error.message}</div>
+  </div>
+);
 
-  return (
-    <div
-      className={`d-flex flex-column textarea${secondary ? ` textarea--secondary` : ''}${
-        className ? ` ${className}` : ''
-      }`}
-      data-text={testID}
-    >
-      {label && (
-        <div className="d-flex justify-content-between">
-          <label className="textarea_label">{label}</label>
-          {!!maxLength && (
-            <div className={`textarea_max-length${value.length > maxLength ? ' textarea_max-length--error' : ''}`}>
-              {value.length}/{maxLength}
-            </div>
-          )}
-        </div>
-      )}
-      <textarea
-        className="textarea_textarea"
-        onChange={onChangeValue}
-        placeholder={placeholder}
-        value={value}
-        rows={rows}
-      />
-      <div className="error-message error-message--right">{error && error.message}</div>
-    </div>
-  );
-};
 TextArea.defaultProps = {
   className: '',
   maxLength: 0,

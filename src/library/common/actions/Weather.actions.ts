@@ -37,7 +37,10 @@ export const getWeatherData = () => async (dispatch, getState): Promise<void> =>
       if (success) {
         weather = {
           ...weather,
-          [city]: { current: { ...weather[city], ...data.current } },
+          [city]: {
+            ...weather[city],
+            current: { ...((weather[city] && weather[city].current) || {}), ...data.current },
+          },
         };
         dispatch({ type: TYPE_SET_WEATHER, payload: weather });
       }
@@ -62,11 +65,17 @@ export const getWeatherDataByCity = (city: string, save: boolean = false, future
     }
     if (save) {
       let { weather } = getState().weatherReducer;
-      weather = { ...weather, [city]: { current, weekForecast } };
+      weather = { ...weather, [city]: { ...(weather[city] || {}), current, weekForecast } };
       dispatch({ type: TYPE_SET_WEATHER, payload: weather });
     }
     return { success: status === 200, data: { current, weekForecast } };
   } catch (e) {
     return { success: false };
   }
+};
+
+export const saveNotes = (city: string, note: string) => async (dispatch, getState): Promise<any> => {
+  let { weather } = getState().weatherReducer;
+  weather = { ...weather, [city]: { ...(weather[city] || {}), note } };
+  dispatch({ type: TYPE_SET_WEATHER, payload: weather });
 };
