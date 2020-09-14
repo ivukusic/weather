@@ -1,3 +1,3 @@
-import Weather from './Home.container';
+import Home from './Home.container';
 
-export default Weather;
+export default Home;

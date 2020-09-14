@@ -1,3 +1,5 @@
+@import 'library/style/variables.scss';
+
 .home_weather {
   .home_weather_city {
     position: relative;
@@ -23,7 +25,7 @@
       font-size: 20px;
       font-style: italic;
       font-weight: 800;
-      background-color: #f3c400;
+      background-color: $themeYellow;
       border-top-left-radius: 10px;
       border-bottom-right-radius: 20px;
       -webkit-box-shadow: 0px 1px 4px 0px rgba(138, 138, 138, 0.9);

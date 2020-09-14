@@ -5,7 +5,7 @@ import { getWeatherData } from 'library/common/actions/Weather.actions';
 import Home from './Home.component';
 
 const mapStateToProps = ({ weatherReducer }: RootState) => ({
-  weather: weatherReducer.weather,
+  ...weatherReducer,
 });
 
 export default connect(mapStateToProps, { getWeatherData })(Home);

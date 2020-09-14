@@ -1,0 +1,14 @@
+.week-forecast {
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .week-forecast_item {
+    background-color: #fff;
+    padding: 1.2rem;
+    border-radius: 10px;
+  }
+}

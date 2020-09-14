@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
-import { getWeatherDataByCity } from 'library/common/actions/Weather.actions';
 import TextInput from 'library/common/components/FormComponents/TextInput';
 
 import weatherImage from 'resources/weather.jpg';
@@ -24,8 +23,8 @@ export const Search = ({ className }: ISearchProps): JSX.Element => {
   };
 
   const handlePick = suggestion => async () => {
-    const { success, data } = await getWeatherDataByCity(suggestion.description);
-    console.log({ success, data });
+    // const { success, data } = await getWeatherDataByCity(suggestion.description);
+    // console.log({ success, data });
   };
 
   return (
@@ -38,15 +37,12 @@ export const Search = ({ className }: ISearchProps): JSX.Element => {
               <>
                 <div>
                   <TextInput
+                    {...getInputProps()}
                     className="location-search-input search-container_input-container"
                     inputClassName="search-container_input"
                     onBlur={onBlurSearch}
                     onFocus={onFocusSearch}
                     placeholder="Search city..."
-                    {...getInputProps({
-                      placeholder: 'Search Places ...',
-                      className: 'location-search-input',
-                    })}
                   />
                 </div>
 
