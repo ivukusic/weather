@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { useParams, Link } from 'react-router-dom';
@@ -10,22 +10,33 @@ import { ICityProps } from './City.type';
 
 import './City.style.scss';
 
-const City = ({ getWeatherDataByCity, saveNotes, weather }: ICityProps): JSX.Element | null => {
+const City = ({
+  addRemoveToFavorites,
+  favorites,
+  getWeatherDataByCity,
+  saveNotes,
+  weather,
+}: ICityProps): JSX.Element | null => {
   const { city } = useParams<{ city: string }>();
+
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   const currentWeather = weather[city];
 
   useEffect(() => {
-    if (!weather[city] || !weather[city].weekForecast) {
+    if (!weather[city] || !weather[city].weekForecast || !loaded) {
+      setLoaded(true);
       getWeatherDataByCity(city, true, true);
     }
-  }, [city, getWeatherDataByCity, weather]);
+  }, [city, getWeatherDataByCity, loaded, weather]);
 
   const onNotesChange = (event: any) => {
     saveNotes(city, event.target.value);
   };
 
-  const onHeartClick = () => {};
+  const onHeartClick = () => {
+    addRemoveToFavorites(city);
+  };
 
   const renderWeekForecast = () => {
     if (currentWeather?.weekForecast?.list) {
@@ -45,7 +56,7 @@ const City = ({ getWeatherDataByCity, saveNotes, weather }: ICityProps): JSX.Ele
               </div>
             ))}
           </div>
-          <span>Scroll to see rest of the forecast</span>
+          <span className="week-forecast_scroll-text">Scroll to see rest of the forecast</span>
           <BsArrowRight />
         </div>
       );
@@ -60,13 +71,12 @@ const City = ({ getWeatherDataByCity, saveNotes, weather }: ICityProps): JSX.Ele
   if (!currentWeather) {
     return null;
   }
-  const isFavorite = true;
   return (
     <div className="container">
       <Link className="arrow-link" to="/">
         <BsArrowLeft className="mt-4" size="60" />
       </Link>
-      <div className="d-flex">
+      <div className="city-details d-flex">
         <img
           src={`http://openweathermap.org/img/wn/${currentWeather?.current?.weather[0].icon}@2x.png`}
           alt="Weather - city details"
@@ -83,7 +93,11 @@ const City = ({ getWeatherDataByCity, saveNotes, weather }: ICityProps): JSX.Ele
             <span>Feels like: {convertKelvinToCelsius(currentWeather?.current?.main.feels_like)}&#176;C</span>
           </div>
           <div className="ml-5" onClick={onHeartClick}>
-            {isFavorite ? <AiFillHeart size={44} /> : <AiOutlineHeart size={44} />}
+            {favorites.includes(city) ? (
+              <AiFillHeart color="#f3c400" size={44} />
+            ) : (
+              <AiOutlineHeart color="#f3c400" size={44} />
+            )}
           </div>
         </div>
       </div>
