@@ -1,0 +1,76 @@
+@import 'library/style/variables.scss';
+
+.text-input {
+  position: relative;
+
+  label {
+    font-size: 0.9em;
+    padding-left: 0.5rem;
+    margin-bottom: 2px;
+    color: $themeColor;
+  }
+  .text-input_input {
+    font-size: 1.1em;
+    color: $themeColor;
+    font-weight: 500;
+    border: 1px solid #ebedf4;
+    border-radius: 5px;
+    padding: 0.6rem;
+    height: 50px;
+    transition: ease-in-out, width 0.35s ease-in-out;
+    background-image: none !important;
+
+    &.text-input_input--disabled {
+      color: $themeColor !important;
+      -webkit-text-fill-color: $themeColor;
+      opacity: 1;
+      background-color: #ffffff88;
+    }
+
+    &:focus {
+      outline: none;
+      border: 1px solid $titleColor;
+      -webkit-box-shadow: 0px 2px 6px 1px rgba(27, 73, 194, 0.14);
+      -moz-box-shadow: 0px 2px 6px 1px rgba(27, 73, 194, 0.14);
+      box-shadow: 0px 2px 6px 2px rgba(27, 73, 194, 0.14);
+    }
+
+    &.text-input_input--password {
+      padding-right: 50px;
+    }
+
+    &::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #9b9b9baa;
+      opacity: 1; /* Firefox */
+      font-size: 0.9em;
+    }
+    &:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: #9b9b9baa;
+      font-size: 0.9em;
+    }
+    &::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: #9b9b9baa;
+      font-size: 0.9em;
+    }
+  }
+  .text-input_eye {
+    position: absolute;
+    top: 2.3rem;
+    right: 1rem;
+  }
+  .text-input_error-message {
+    text-align: right;
+    color: $errorColor;
+    font-size: 0.8em;
+    height: 0.9em;
+  }
+
+  &.text-input--secondary {
+    label {
+      color: $grayText;
+    }
+  }
+}

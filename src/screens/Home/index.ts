@@ -1,3 +1,3 @@
-import Home from './Home.component';
+import Weather from './Home.container';
 
-export default Home;
+export default Weather;

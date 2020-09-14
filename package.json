@@ -41,6 +41,7 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-batched-actions": "^0.5.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "ts-jest": "^26.1.0",
     "tslint": "^6.1.2",

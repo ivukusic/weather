@@ -1,11 +1,9 @@
 // tslint:disable: no-console
 
 import Axios from 'axios';
-import { URLS } from 'library/common/constants/Url.constants';
 
-export const BASE_URL = process.env.REACT_APP_BASE_URL;
-const APP_ID = process.env.REACT_APP_APP_ID;
-
+export const BASE_URL = process.env.REACT_APP_WEATHER_BASE_URL;
+const APP_ID = process.env.REACT_APP_WEATHER_APP_ID;
 const axiosInstance = Axios.create({
   baseURL: BASE_URL,
 });
@@ -21,8 +19,7 @@ axiosInstance.interceptors.response.use(
   error => {
     if (error.response) {
       console.log('Error response: ', error.response);
-      const loginURL = BASE_URL + URLS.login;
-      if (error.response.status === 401 && error.response.config.url !== loginURL) {
+      if (error.response.status === 401) {
         // EXPIRE SESSION
       }
     } else if (error.request) {

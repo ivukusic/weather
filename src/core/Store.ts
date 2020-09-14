@@ -1,8 +1,18 @@
 import { applyMiddleware, createStore } from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
-// import { enableBatching } from 'redux-batched-actions';
+
 import appReducer from './MainReducer';
 
-export const store = createStore(appReducer, applyMiddleware(thunk));
+const persistConfig = {
+  key: 'root',
+  // blacklist: ['weatherReducer'],
+  whitelist: ['weatherReducer'],
+  storage,
+};
 
-export default store;
+const persistedReducer: any = persistReducer(persistConfig, appReducer);
+
+export const store = createStore(persistedReducer, applyMiddleware(thunk));
+export const persistor = persistStore(store);
