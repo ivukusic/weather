@@ -4,6 +4,7 @@ import { RootState } from 'core/MainReducer';
 import {
   addRemoveToFavorites,
   getWeatherData,
+  getWeatherDataByCity,
   removeFromList,
   resetList,
 } from 'library/common/actions/Weather.actions';
@@ -13,4 +14,10 @@ const mapStateToProps = ({ weatherReducer }: RootState) => ({
   ...weatherReducer,
 });
 
-export default connect(mapStateToProps, { addRemoveToFavorites, getWeatherData, removeFromList, resetList })(Home);
+export default connect(mapStateToProps, {
+  addRemoveToFavorites,
+  getWeatherData,
+  getWeatherDataByCity,
+  removeFromList,
+  resetList,
+})(Home);

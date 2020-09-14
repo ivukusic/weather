@@ -17,16 +17,17 @@ const City = ({
   saveNotes,
   weather,
 }: ICityProps): JSX.Element | null => {
-  const { city } = useParams<{ city: string }>();
+  let { city } = useParams<{ city: string }>();
+  city = city.toLowerCase();
 
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const currentWeather = weather[city];
 
   useEffect(() => {
-    if (!weather[city] || !weather[city].weekForecast || !loaded) {
+    if ((!weather[city] || !weather[city].weekForecast || !Object.keys(weather[city].weekForecast).length) && !loaded) {
       setLoaded(true);
-      getWeatherDataByCity(city, true, true);
+      getWeatherDataByCity(city, false, true);
     }
   }, [city, getWeatherDataByCity, loaded, weather]);
 
@@ -84,7 +85,7 @@ const City = ({
         <div className="d-flex flex-grow-1 pt-3">
           <div className="d-flex flex-column">
             <h1 className="title mb-0">
-              {currentWeather?.current?.name}
+              {currentWeather?.city}
               <span className="pl-5 mb-2">{convertKelvinToCelsius(currentWeather?.current?.main.temp)}&#176;C</span>
             </h1>
             <h5 className="subtitle mb-0">

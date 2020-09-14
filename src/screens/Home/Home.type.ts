@@ -5,6 +5,7 @@ export interface IWeatherProps extends RouteComponentProps {
   cities: any;
   favorites: any;
   getWeatherData: () => {};
+  getWeatherDataByCity: any;
   removeFromList: any;
   resetList: any;
   weather: any;

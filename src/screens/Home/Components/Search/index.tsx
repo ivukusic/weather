@@ -6,7 +6,7 @@ import TextInput from 'library/common/components/FormComponents/TextInput';
 import weatherImage from 'resources/weather.jpg';
 import './Search.style.scss';
 
-export const Search = ({ className }: ISearchProps): JSX.Element => {
+export const Search = ({ className, onSelect }: ISearchProps): JSX.Element => {
   const [address, setAddress] = useState<string>('');
   const [suggestionsVisible, setSuggestionsVisible] = useState<boolean>(false);
 
@@ -23,8 +23,7 @@ export const Search = ({ className }: ISearchProps): JSX.Element => {
   };
 
   const handlePick = suggestion => async () => {
-    // const { success, data } = await getWeatherDataByCity(suggestion.description);
-    // console.log({ success, data });
+    onSelect(suggestion.description);
   };
 
   return (
@@ -74,6 +73,7 @@ Search.defaultProps = {
 
 interface ISearchProps {
   className?: string;
+  onSelect: any;
 }
 
 export default Search;

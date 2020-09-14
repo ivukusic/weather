@@ -7,8 +7,8 @@ import appReducer from './MainReducer';
 
 const persistConfig = {
   key: 'root',
-  // blacklist: ['weatherReducer'],
-  whitelist: ['weatherReducer'],
+  blacklist: ['weatherReducer'],
+  // whitelist: ['weatherReducer'],
   storage,
 };
 

@@ -16,6 +16,7 @@ const Home = ({
   favorites,
   history,
   getWeatherData,
+  getWeatherDataByCity,
   removeFromList,
   resetList,
   weather,
@@ -64,6 +65,13 @@ const Home = ({
     resetList();
   };
 
+  const onSearchSelect = async city => {
+    const { success, data } = await getWeatherDataByCity(city, true, true);
+    if (success) {
+      history.push(`/city/${data.city}`);
+    }
+  };
+
   const renderItems = (items, isFavorites) =>
     items.map((item: any) => {
       const { accentcity, city } = item.fields;
@@ -101,7 +109,7 @@ const Home = ({
 
   return (
     <>
-      <Search />
+      <Search onSelect={onSearchSelect} />
       <div className="container pt-3 pb-5">
         {!!favorites.length && (
           <div className="home_weather mt-2">
