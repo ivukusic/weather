@@ -23,6 +23,7 @@ export const Search = ({ className, onSelect }: ISearchProps): JSX.Element => {
   };
 
   const handleChange = address => {
+    console.log(address)
     setAddress(address);
   };
 
@@ -99,7 +100,6 @@ export const Search = ({ className, onSelect }: ISearchProps): JSX.Element => {
 
 Search.defaultProps = {
   className: '',
-  type: 'primary',
 };
 
 export default Search;

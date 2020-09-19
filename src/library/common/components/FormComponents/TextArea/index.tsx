@@ -42,8 +42,7 @@ TextArea.defaultProps = {
   maxLength: 0,
   placeholder: '',
   rows: 4,
-  secondary: false,
-  type: 'primary',
+  secondary: false
 };
 
 export default TextArea;

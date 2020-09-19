@@ -1,27 +1,27 @@
 import Axios from 'axios';
 
-import axiosInstance from 'core/axios';
 import { TYPE_SET_CITIES, TYPE_SET_FAVORITES, TYPE_SET_WEATHER } from 'library/common/constants/Store.constants';
 import { URLS } from 'library/common/constants/Url.constants';
 import { ICityType, IWeatherType } from 'library/types';
 import { camelCase } from 'library/utilities';
 
-const getCities = () => async (dispatch): Promise<ICityType[]> => {
+export const getCities = () => async (dispatch): Promise<ICityType[]> => {
   try {
-    const { data } = await Axios.get(
-      'https://public.opendatasoft.com/api/records/1.0/search/?dataset=worldcitiespop&q=&rows=15&sort=population&facet=country',
-    );
-    const cities = data.records.sort((a, b) => {
-      if (a.fields.city < b.fields.city) {
-        return -1;
-      }
-      if (a.fields.city > b.fields.city) {
-        return 1;
-      }
-      return 0;
-    });
-    dispatch({ type: TYPE_SET_CITIES, payload: cities });
-    return cities;
+    const { status, data } = await Axios.get(URLS.getCities);
+    if (status === 200 && data.records && data.records.length) {
+      const cities = data.records.sort((a, b) => {
+        if (a.fields.city < b.fields.city) {
+          return -1;
+        }
+        if (a.fields.city > b.fields.city) {
+          return 1;
+        }
+        return 0;
+      });
+      dispatch({ type: TYPE_SET_CITIES, payload: cities });
+      return cities;
+    }
+    return [];
   } catch (e) {
     return [];
   }
@@ -64,13 +64,13 @@ export const getWeatherDataByCity = ({
       urlWeather = `${URLS.weatherLatLong(lat, long)}`;
       urlForecast = `${URLS.weatherLatLongWeek(lat, long)}`;
     }
-    const { status, data: current } = await axiosInstance.get(urlWeather);
+    const { status, data: current } = await Axios.get(urlWeather);
     cityString = (transformCityName || !cityString ? current.name : city).toLowerCase();
     let { weather } = getState().weatherReducer;
     if (status === 200) {
       let weekForecast = {};
       if (future) {
-        const { status, data } = await axiosInstance.get(urlForecast);
+        const { status, data } = await Axios.get(urlForecast);
         if (status === 200) {
           weekForecast = data;
         }

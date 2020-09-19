@@ -10,16 +10,16 @@ export const WEATHER_REDUCER_INITIAL_STATE = {
 export interface WeatherReducerType {
   cities: ICityType[];
   favorites: string[];
-  weather: IWeatherType;
+  weather: { [key: string]: IWeatherType };
 }
 
 interface ActionCitiesType {
-  type: typeof TYPE_SET_WEATHER;
+  type: typeof TYPE_SET_CITIES;
   payload: ICityType[];
 }
 
 interface ActionWeatherType {
-  type: typeof TYPE_SET_CITIES;
+  type: typeof TYPE_SET_WEATHER;
   payload: IWeatherType;
 }
 

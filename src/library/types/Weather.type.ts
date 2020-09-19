@@ -34,8 +34,9 @@ export interface IWeatherDayType {
 export interface IWeatherType {
   city: string;
   current: IWeatherDayType;
+  note?: string;
   show: boolean;
   weekForecast: {
-    list: IWeatherDayType[];
+    list?: IWeatherDayType[];
   };
 }

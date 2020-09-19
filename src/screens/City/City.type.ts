@@ -12,5 +12,5 @@ export interface ICityTypeProps extends RouteComponentProps {
     future?: boolean;
   }) => Promise<{ success: boolean; data?: { city: string; weather: IWeatherType } }>;
   saveNotes: (city: string, note: string) => Promise<void>;
-  weather: IWeatherType;
+  weather: { [key: string]: IWeatherType };
 }

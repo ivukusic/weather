@@ -19,39 +19,31 @@ export const TextInput = ({
   testID,
   type,
   value,
-}: ITextInputProps): JSX.Element => {
-  // const onChangeValue = event => {
-  //   if (onChange) {
-  //     onChange(event.target.value);
-  //   }
-  // };
-
-  return (
-    <div
-      className={`d-flex flex-column text-input${secondary ? ` text-input--secondary` : ''}${
-        className ? ` ${className}` : ''
-      }`}
-      data-text={testID}
-    >
-      {label && <label>{label}</label>}
-      <input
-        className={`text-input_input
-          ${disabled ? ` text-input_input--disabled` : ''}
-          ${type === 'password' ? ' text-input_input--password' : ''}
-          ${inputClassName ? ` ${inputClassName}` : ''}
-        `}
-        disabled={disabled}
-        type={type}
-        onBlur={onBlur}
-        onChange={onChange}
-        onFocus={onFocus}
-        placeholder={placeholder}
-        value={value}
-      />
-      {showError && <div className="text-input_error-message">{error && error.message}</div>}
-    </div>
-  );
-};
+}: ITextInputProps): JSX.Element => (
+  <div
+    className={`d-flex flex-column text-input${secondary ? ` text-input--secondary` : ''}${
+      className ? ` ${className}` : ''
+    }`}
+    data-testid={testID}
+  >
+    {label && <label>{label}</label>}
+    <input
+      className={`text-input_input
+        ${disabled ? ` text-input_input--disabled` : ''}
+        ${type === 'password' ? ' text-input_input--password' : ''}
+        ${inputClassName ? ` ${inputClassName}` : ''}
+      `}
+      disabled={disabled}
+      type={type}
+      onBlur={onBlur}
+      onChange={onChange}
+      onFocus={onFocus}
+      placeholder={placeholder}
+      value={value}
+    />
+    {showError && <div className="text-input_error-message">{error && error.message}</div>}
+  </div>
+);
 
 TextInput.defaultProps = {
   className: '',
@@ -60,7 +52,7 @@ TextInput.defaultProps = {
   showError: true,
   placeholder: '',
   secondary: false,
-  type: 'primary',
+  type: 'text',
 };
 
 export default TextInput;

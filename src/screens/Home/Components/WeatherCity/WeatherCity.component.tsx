@@ -19,22 +19,28 @@ export const WeatherCity = ({
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (!loaded && (!weather || !weather[city] || !weather[city].city || !weather[city].current)) {
+    if (
+      !loaded &&
+      isFavorites &&
+      (!weather[city] || !weather[city].city || !weather[city].current) &&
+      weather &&
+      Object.keys(weather).length
+    ) {
       setLoaded(true);
       getWeatherDataByCity({ city, transformCityName: false, future: true });
     }
-  }, [city, getWeatherDataByCity, loaded, weather]);
+  }, [city, getWeatherDataByCity, isFavorites, loaded, weather]);
 
-  const onItemClick = city => (): void => {
+  const onItemClick = (): void => {
     history.push(`/city/${city}`);
   };
 
-  const onHeartClick = (city: string) => (event: SyntheticEvent): void => {
+  const onHeartClick = (event: SyntheticEvent): void => {
     event.stopPropagation();
     addRemoveToFavorites(city);
   };
 
-  const onRemoveClick = (city: string) => (event: SyntheticEvent): void => {
+  const onRemoveClick = (event: SyntheticEvent): void => {
     event.stopPropagation();
     removeFromList(city);
   };
@@ -50,15 +56,15 @@ export const WeatherCity = ({
           <span className="pl-5">{temp ? convertKelvinToCelsius(temp) : ' - '}&#176;C </span>
         </h4>
         <div className="d-flex align-items-center">
-          <div onClick={onHeartClick(city)}>
+          <div onClick={onHeartClick} data-testid="city-details-favorite-container">
             {favorites.includes(city) ? (
-              <AiFillHeart color="#f3c400" size={34} />
+              <AiFillHeart data-testid={`city-details-${city}-favorite`} color="#f3c400" size={34} />
             ) : (
-              <AiOutlineHeart color="#f3c400" size={34} />
+              <AiOutlineHeart data-testid={`city-details-${city}-not-favorite`} color="#f3c400" size={34} />
             )}
           </div>
           {!isFavorites && (
-            <div className="cursor-pointer p-2" onClick={onRemoveClick(city)}>
+            <div className="cursor-pointer p-2" onClick={onRemoveClick} data-testid="city-details-remove">
               <GrClose size={20} />
             </div>
           )}
@@ -76,6 +82,7 @@ export const WeatherCity = ({
     <div
       className="city-details cursor-pointer d-flex align-items-center justify-content-between mb-2 pt-3 pb-3"
       onClick={onItemClick}
+      data-testid="city-details"
     >
       {renderCityDetails()}
     </div>

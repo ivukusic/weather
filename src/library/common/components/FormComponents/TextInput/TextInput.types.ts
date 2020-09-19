@@ -8,7 +8,7 @@ export interface ITextInputProps {
   key?: string;
   label?: string;
   onBlur?: (event: SyntheticEvent) => void;
-  onChange?: (event: SyntheticEvent) => void;
+  onChange: (event: SyntheticEvent) => void;
   onFocus?: (event: SyntheticEvent) => void;
   placeholder?: string;
   secondary?: boolean;

@@ -13,5 +13,5 @@ export interface IWeatherProps extends RouteComponentProps {
     future?: boolean;
   }) => Promise<{ success: boolean; data?: { city: string; weather: IWeatherType } }>;
   resetList: () => void;
-  weather: IWeatherType;
+  weather: { [key: string]: IWeatherType };
 }

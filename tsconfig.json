@@ -20,7 +20,8 @@
         "name": "typescript-tslint-plugin"
       }
     ],
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "outDir": "build"
   },
   "exclude": ["node_modules", "build", "scripts", "acceptance-tests", "webpack", "jest"],
   "include": ["src"]
