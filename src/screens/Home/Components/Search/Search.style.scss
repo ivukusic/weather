@@ -21,6 +21,12 @@
       position: relative;
       width: 40%;
       min-width: 360px;
+
+      .search-loader {
+        position: absolute;
+        top: 14px;
+        right: 3px;
+      }
     }
     .search-container_input {
       padding-left: 2rem;

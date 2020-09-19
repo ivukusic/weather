@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
-import TextInput from 'library/common/components/FormComponents/TextInput';
-
+import { AlertMessagesContext, Loader, TextInput } from 'library/common/components';
 import weatherImage from 'resources/weather.jpg';
+import { ISearchProps } from './Search.type';
+
 import './Search.style.scss';
 
 export const Search = ({ className, onSelect }: ISearchProps): JSX.Element => {
+  const { addAlertMessages } = useContext(AlertMessagesContext);
+
   const [address, setAddress] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const [suggestionsVisible, setSuggestionsVisible] = useState<boolean>(false);
 
   const onBlurSearch = () => {
@@ -23,7 +27,27 @@ export const Search = ({ className, onSelect }: ISearchProps): JSX.Element => {
   };
 
   const handlePick = suggestion => async () => {
-    onSelect(suggestion.description);
+    setLoading(true);
+    if (suggestion.description === 'current-location') {
+      navigator.geolocation.getCurrentPosition(
+        async position => {
+          const { success } = await onSelect({ lat: position.coords.latitude, long: position.coords.longitude });
+          if (!success) {
+            setLoading(false);
+            addAlertMessages([{ type: 'error', message: 'Something went wrong fetching weather for your location.' }]);
+          }
+        },
+        () => {
+          addAlertMessages([{ type: 'error', message: 'Something went wrong fetching your location.' }]);
+        },
+      );
+    } else {
+      const { success } = await onSelect({ city: suggestion.description });
+      if (!success) {
+        setLoading(false);
+        addAlertMessages([{ type: 'error', message: 'Something went wrong fetching weather for your location.' }]);
+      }
+    }
   };
 
   return (
@@ -43,10 +67,17 @@ export const Search = ({ className, onSelect }: ISearchProps): JSX.Element => {
                     onFocus={onFocusSearch}
                     placeholder="Search city..."
                   />
+                  {loading && (
+                    <div className="search-loader">
+                      <Loader />
+                    </div>
+                  )}
                 </div>
 
                 <div className={`search_result${suggestionsVisible ? ' search_result--visible' : ''}`}>
-                  <div className="search_result_item">Use your current location</div>
+                  <div className="search_result_item" onClick={handlePick({ description: 'current-location' })}>
+                    Use your current location
+                  </div>
                   {suggestions.map((suggestion, index) => (
                     <div
                       {...getSuggestionItemProps(suggestion, { className: 'search_result_item' })}
@@ -70,10 +101,5 @@ Search.defaultProps = {
   className: '',
   type: 'primary',
 };
-
-interface ISearchProps {
-  className?: string;
-  onSelect: any;
-}
 
 export default Search;

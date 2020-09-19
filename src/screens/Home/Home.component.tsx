@@ -1,112 +1,49 @@
-import React, { useEffect, useState, SyntheticEvent } from 'react';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { GrClose } from 'react-icons/gr';
+import React, { useEffect } from 'react';
 
 import { Button } from 'library/common/components';
-import { convertKelvinToCelsius } from 'library/utilities';
 
 import Search from './Components/Search';
+import WeatherCity from './Components/WeatherCity';
 import { IWeatherProps } from './Home.type';
 
 import './Home.style.scss';
 
 const Home = ({
-  addRemoveToFavorites,
   cities,
   favorites,
   history,
   getWeatherData,
   getWeatherDataByCity,
-  removeFromList,
   resetList,
   weather,
 }: IWeatherProps): JSX.Element => {
-  const [{ loaded, reset }, setState] = useState({ loaded: false, reset: false });
-
   useEffect(() => {
     getWeatherData();
-    // navigator.geolocation.getCurrentPosition(function (position) {
-    //   console.log('Latitude is :', position.coords.latitude);
-    //   console.log('Longitude is :', position.coords.longitude);
-    // });
   }, [getWeatherData]);
 
-  useEffect(() => {
-    if (!loaded && weather && Object.keys(weather).length) {
-      let reset = false;
-      Object.keys(weather).forEach(key => {
-        if (!weather[key].show) {
-          reset = true;
-        }
-      });
-      setState({ loaded: true, reset });
-    }
-  }, [loaded, weather]);
-
-  const onItemClick = city => () => {
-    history.push(`/city/${city}`);
-  };
-
-  const onHeartClick = (city: string) => (event: SyntheticEvent) => {
-    event.stopPropagation();
-    addRemoveToFavorites(city);
-  };
-
-  const onRemoveClick = (city: string) => (event: SyntheticEvent) => {
-    event.stopPropagation();
-    if (!reset) {
-      setState({ loaded: true, reset: true });
-    }
-    removeFromList(city);
-  };
-
-  const onResetClick = () => {
-    setState({ loaded: true, reset: false });
-    resetList();
-  };
-
-  const onSearchSelect = async city => {
-    const { success, data } = await getWeatherDataByCity(city, true, true);
-    if (success) {
+  const onSearchSelect = async ({ city, lat, long }: { city?: string; lat?: number; long?: number }) => {
+    const { success, data } = await getWeatherDataByCity({ city, lat, long, transformCityName: true, future: true });
+    if (success && data) {
       history.push(`/city/${data.city}`);
     }
+    return { success };
   };
 
-  const renderItems = (items, isFavorites) =>
+  const renderItems = (items, isFavorites): JSX.Element =>
     items.map((item: any) => {
-      const { accentcity, city } = item.fields;
-      const { temp } = (weather[city] && weather[city].current && weather[city].current.main) || {};
-      if (!isFavorites && weather[city] && !weather[city].show) {
-        return null;
+      let city = item;
+      if (item.fields) {
+        city = item.fields.city;
       }
-      return (
-        <div
-          key={item.recordid}
-          className="city-details d-flex align-items-center justify-content-between mb-2 pt-3 pb-3"
-          onClick={onItemClick(city)}
-        >
-          <h4 className="mb-0">
-            {accentcity}
-            <span className="pl-5">{temp ? convertKelvinToCelsius(temp) : ' - '}&#176;C </span>
-          </h4>
-          <div className="d-flex align-items-center">
-            <div onClick={onHeartClick(city)}>
-              {favorites.includes(city) ? (
-                <AiFillHeart color="#f3c400" size={34} />
-              ) : (
-                <AiOutlineHeart color="#f3c400" size={34} />
-              )}
-            </div>
-            {!isFavorites && (
-              <div className="cursor-pointer p-2" onClick={onRemoveClick(city)}>
-                <GrClose size={20} />
-              </div>
-            )}
-          </div>
-        </div>
-      );
+      return <WeatherCity key={item.recordid || item} city={city} isFavorites={isFavorites} />;
     });
 
+  let reset = false;
+  Object.keys(weather).forEach(key => {
+    if (!weather[key].show) {
+      reset = true;
+    }
+  });
   return (
     <>
       <Search onSelect={onSearchSelect} />
@@ -115,10 +52,7 @@ const Home = ({
           <div className="home_weather mt-2">
             <h1 className="title">Favorites</h1>
             <h5 className="subtitle mb-4">Favorite cities</h5>
-            {renderItems(
-              cities.filter(item => favorites.includes(item.fields.city)),
-              true,
-            )}
+            {renderItems(favorites, true)}
           </div>
         )}
         <div className="home_weather mt-5">
@@ -127,7 +61,7 @@ const Home = ({
               <h1 className="title">Current weather</h1>
               <h5 className="subtitle mb-4">Largest cities by population</h5>
             </div>
-            {reset && <Button className="mb-4" label="Reset" onClick={onResetClick} />}
+            {reset && <Button className="mb-4" label="Reset" onClick={resetList} />}
           </div>
           {renderItems(cities, false)}
         </div>

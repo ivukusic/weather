@@ -3,11 +3,12 @@ import Axios from 'axios';
 import axiosInstance from 'core/axios';
 import { TYPE_SET_CITIES, TYPE_SET_FAVORITES, TYPE_SET_WEATHER } from 'library/common/constants/Store.constants';
 import { URLS } from 'library/common/constants/Url.constants';
+import { ICityType, IWeatherType } from 'library/types';
 import { camelCase } from 'library/utilities';
 
-const getCities = () => async (dispatch, getState): Promise<any> => {
+const getCities = () => async (dispatch): Promise<ICityType[]> => {
   try {
-    const { data }: { status: number; data: any } = await Axios.get(
+    const { data } = await Axios.get(
       'https://public.opendatasoft.com/api/records/1.0/search/?dataset=worldcitiespop&q=&rows=15&sort=population&facet=country',
     );
     const cities = data.records.sort((a, b) => {
@@ -33,30 +34,43 @@ export const getWeatherData = () => async (dispatch, getState): Promise<void> =>
   }
   for (let i = 0; i < cities.length; i++) {
     const { weather } = getState().weatherReducer;
-    if (!weather[cities[i].fields.city]) {
-      await dispatch(getWeatherDataByCity(cities[i].fields.city));
+    if (!weather[cities[i].fields.city] || !weather[cities[i].fields.city].current) {
+      await dispatch(getWeatherDataByCity({ city: cities[i].fields.city }));
     }
   }
 };
 
-export const getWeatherDataByCity = (
-  city: string,
-  transformCityName: boolean = false,
-  future: boolean = false,
-) => async (dispatch, getState): Promise<any> => {
+export const getWeatherDataByCity = ({
+  city,
+  lat,
+  long,
+  transformCityName = false,
+  future = false,
+}: {
+  city?: string;
+  lat?: number;
+  long?: number;
+  transformCityName?: boolean;
+  future?: boolean;
+}) => async (dispatch, getState): Promise<{ success: boolean; data?: { city: string; weather: IWeatherType } }> => {
   try {
-    let cityString = city.toLowerCase();
-    const { status, data: current }: { status: number; data: any } = await axiosInstance.get(
-      `${URLS.weatherCity(city)}`,
-    );
-    cityString = (transformCityName ? current.name : city).toLowerCase();
+    let cityString = (city && city.toLowerCase()) || '';
+    let urlWeather = '';
+    let urlForecast = '';
+    if (city) {
+      urlWeather = `${URLS.weatherCity(city)}`;
+      urlForecast = `${URLS.weatherCityWeek(cityString)}`;
+    } else if (lat && long) {
+      urlWeather = `${URLS.weatherLatLong(lat, long)}`;
+      urlForecast = `${URLS.weatherLatLongWeek(lat, long)}`;
+    }
+    const { status, data: current } = await axiosInstance.get(urlWeather);
+    cityString = (transformCityName || !cityString ? current.name : city).toLowerCase();
     let { weather } = getState().weatherReducer;
     if (status === 200) {
       let weekForecast = {};
       if (future) {
-        const { status, data }: { status: number; data: any } = await axiosInstance.get(
-          `${URLS.weatherCityWeek(cityString)}`,
-        );
+        const { status, data } = await axiosInstance.get(urlForecast);
         if (status === 200) {
           weekForecast = data;
         }
@@ -79,13 +93,13 @@ export const getWeatherDataByCity = (
   }
 };
 
-export const saveNotes = (city: string, note: string) => async (dispatch, getState): Promise<any> => {
+export const saveNotes = (city: string, note: string) => async (dispatch, getState): Promise<void> => {
   let { weather } = getState().weatherReducer;
   weather = { ...weather, [city]: { ...(weather[city] || {}), note } };
   dispatch({ type: TYPE_SET_WEATHER, payload: weather });
 };
 
-export const addRemoveToFavorites = (city: string) => async (dispatch, getState): Promise<any> => {
+export const addRemoveToFavorites = (city: string) => async (dispatch, getState): Promise<void> => {
   const { favorites } = getState().weatherReducer;
   if (favorites && favorites.includes(city)) {
     favorites.splice(favorites.indexOf(city), 1);

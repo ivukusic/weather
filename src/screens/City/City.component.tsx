@@ -6,9 +6,10 @@ import { useParams, Link } from 'react-router-dom';
 
 import { TextArea } from 'library/common/components';
 import { convertKelvinToCelsius } from 'library/utilities';
-import { ICityProps } from './City.type';
+import { ICityTypeProps } from './City.type';
 
 import './City.style.scss';
+import { IWeatherDayType } from 'library/types';
 
 const City = ({
   addRemoveToFavorites,
@@ -16,7 +17,7 @@ const City = ({
   getWeatherDataByCity,
   saveNotes,
   weather,
-}: ICityProps): JSX.Element | null => {
+}: ICityTypeProps): JSX.Element | null => {
   let { city } = useParams<{ city: string }>();
   city = city.toLowerCase();
 
@@ -27,35 +28,37 @@ const City = ({
   useEffect(() => {
     if ((!weather[city] || !weather[city].weekForecast || !Object.keys(weather[city].weekForecast).length) && !loaded) {
       setLoaded(true);
-      getWeatherDataByCity(city, false, true);
+      getWeatherDataByCity({ city, future: true });
     }
   }, [city, getWeatherDataByCity, loaded, weather]);
 
-  const onNotesChange = (event: any) => {
+  const onNotesChange = (event: any): void => {
     saveNotes(city, event.target.value);
   };
 
-  const onHeartClick = () => {
+  const onHeartClick = (): void => {
     addRemoveToFavorites(city);
   };
 
-  const renderWeekForecast = () => {
+  const renderWeekForecast = (): JSX.Element | null => {
     if (currentWeather?.weekForecast?.list) {
       return (
         <div className="overflow-auto w-100 mt-5">
           <div className="d-flex week-forecast">
-            {currentWeather?.weekForecast?.list.map(item => (
-              <div key={item.dt} className="week-forecast_item mr-2">
-                <img
-                  src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
-                  alt="Weather - city details"
-                />
-                <div className="d-flex flex-column align-items-center">
-                  <span>{moment.unix(item.dt).format('dddd')}</span>
-                  <span>{moment.unix(item.dt).format('DD/MM')}</span>
+            {currentWeather?.weekForecast?.list.map(
+              (item: IWeatherDayType): JSX.Element => (
+                <div key={item.dt} className="week-forecast_item mr-2">
+                  <img
+                    src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                    alt="Weather - city details"
+                  />
+                  <div className="d-flex flex-column align-items-center">
+                    <span>{moment.unix(item.dt).format('dddd')}</span>
+                    <span>{moment.unix(item.dt).format('DD/MM')}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ),
+            )}
           </div>
           <span className="week-forecast_scroll-text">Scroll to see rest of the forecast</span>
           <BsArrowRight />
@@ -65,7 +68,7 @@ const City = ({
     return null;
   };
 
-  const renderNotes = () => (
+  const renderNotes = (): JSX.Element => (
     <TextArea className="mt-5" placeholder="Add notes..." onChange={onNotesChange} value={currentWeather.note || ''} />
   );
 

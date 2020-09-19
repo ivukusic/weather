@@ -1,9 +1,11 @@
-import { IWeatherType } from 'library/types';
+import { ICityType, IWeatherType } from 'library/types';
 import { RouteComponentProps } from 'react-router-dom';
 
-export interface ICityTypeProps extends RouteComponentProps {
-  addRemoveToFavorites: (city: string) => Promise<any>;
+export interface IWeatherCityProps extends RouteComponentProps {
+  addRemoveToFavorites: (city: string) => Promise<void>;
+  cities: ICityType[];
   favorites: string[];
+  city: string;
   getWeatherDataByCity: (data: {
     city?: string;
     lat?: number;
@@ -11,6 +13,7 @@ export interface ICityTypeProps extends RouteComponentProps {
     transformCityName?: boolean;
     future?: boolean;
   }) => Promise<{ success: boolean; data?: { city: string; weather: IWeatherType } }>;
-  saveNotes: (city: string, note: string) => Promise<void>;
+  isFavorites?: boolean;
+  removeFromList: (city: string) => Promise<void>;
   weather: IWeatherType;
 }

@@ -1,0 +1,41 @@
+@import 'library/style/variables.scss';
+
+.toast {
+  min-width: 500px;
+  border-radius: 20px !important;
+  margin: 0 auto;
+  @media (max-width: 575px) {
+    display: 360px;
+  }
+
+  &.toast--first {
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+  }
+
+  .toast-header {
+    display: block;
+    text-align: center;
+    border: none;
+    padding: 1em 1.4em 0.2em 1.4em !important;
+    font-size: 1.4em;
+    &.toast-header--success {
+      color: $titleColor;
+    }
+    &.toast-header--error {
+      color: $errorColor;
+    }
+    button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+  }
+
+  .toast-body {
+    text-align: center !important;
+    padding: 0.2em 1.4em 0.2em 1.4em !important;
+    font-size: 1em;
+    color: $darkGrayText;
+  }
+}

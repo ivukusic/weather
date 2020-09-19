@@ -1,5 +1,5 @@
 import { TYPE_SET_CITIES, TYPE_SET_FAVORITES, TYPE_SET_WEATHER } from 'library/common/constants/Store.constants';
-import { WeatherType } from 'library/types/Weather.types';
+import { ICityType, IWeatherType } from 'library/types';
 
 export const WEATHER_REDUCER_INITIAL_STATE = {
   cities: [],
@@ -8,24 +8,24 @@ export const WEATHER_REDUCER_INITIAL_STATE = {
 };
 
 export interface WeatherReducerType {
-  cities: any;
-  favorites: any;
-  weather: WeatherType;
+  cities: ICityType[];
+  favorites: string[];
+  weather: IWeatherType;
 }
 
 interface ActionCitiesType {
   type: typeof TYPE_SET_WEATHER;
-  payload: any;
+  payload: ICityType[];
 }
 
 interface ActionWeatherType {
   type: typeof TYPE_SET_CITIES;
-  payload: WeatherType;
+  payload: IWeatherType;
 }
 
 interface ActionFavoritesType {
   type: typeof TYPE_SET_FAVORITES;
-  payload: any;
+  payload: string[];
 }
 
 export default (
