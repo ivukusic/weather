@@ -15,7 +15,7 @@ const form = {
   },
   firstName: {
     error: null,
-    value: 'Ivan',
+    value: 'name',
     validators: [{ check: Validators.required, message: 'requiredErrorMessage' }],
     touched: false,
     isValid: false,
@@ -29,7 +29,7 @@ const form = {
   },
   email: {
     error: null,
-    value: 'ivan@theleanapps.com',
+    value: 'name@gmail.com',
     isValid: true,
     validators: [
       { check: Validators.required, message: 'requiredErrorMessage' },

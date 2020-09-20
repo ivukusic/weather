@@ -25,6 +25,11 @@ code {
     width: 50px;
     background-color: $themeYellow;
   }
+  &.title--no-line {
+    &::before {
+      display: none;
+    }
+  }
 }
 .subtitle {
   font-size: 14px;

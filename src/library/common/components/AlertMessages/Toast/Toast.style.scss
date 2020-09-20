@@ -1,7 +1,8 @@
 @import 'library/style/variables.scss';
 
 .toast {
-  min-width: 500px;
+  width: 500px;
+  max-width: 95vw;
   border-radius: 20px !important;
   margin: 0 auto;
   @media (max-width: 575px) {

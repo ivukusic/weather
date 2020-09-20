@@ -1,22 +1,12 @@
 import React, { useEffect } from 'react';
 
-import { Button } from 'library/common/components';
-
 import Search from './Components/Search';
 import WeatherCity from './Components/WeatherCity';
 import { IWeatherProps } from './Home.type';
 
 import './Home.style.scss';
 
-const Home = ({
-  cities,
-  favorites,
-  history,
-  getWeatherData,
-  getWeatherDataByCity,
-  resetList,
-  weather,
-}: IWeatherProps): JSX.Element => {
+const Home = ({ cities, favorites, history, getWeatherData, getWeatherDataByCity }: IWeatherProps): JSX.Element => {
   useEffect(() => {
     getWeatherData();
   }, [getWeatherData]);
@@ -38,12 +28,6 @@ const Home = ({
       return <WeatherCity key={item.recordid || item} city={city} isFavorites={isFavorites} />;
     });
 
-  let reset = false;
-  Object.keys(weather).forEach(key => {
-    if (!weather[key].show) {
-      reset = true;
-    }
-  });
   return (
     <>
       <Search onSelect={onSearchSelect} />
@@ -56,12 +40,11 @@ const Home = ({
           </div>
         )}
         <div className="home_weather mt-5">
-          <div className="d-flex justify-content-between align-items-end">
+          <div className="d-flex flex-column flex-sm-row justify-content-between align-items-sm-end">
             <div>
               <h1 className="title">Current weather</h1>
               <h5 className="subtitle mb-4">Largest cities by population</h5>
             </div>
-            {reset && <Button className="mb-4" label="Reset" onClick={resetList} />}
           </div>
           {renderItems(cities, false)}
         </div>

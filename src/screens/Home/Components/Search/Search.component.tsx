@@ -23,7 +23,6 @@ export const Search = ({ className, onSelect }: ISearchProps): JSX.Element => {
   };
 
   const handleChange = address => {
-    console.log(address)
     setAddress(address);
   };
 
@@ -39,6 +38,7 @@ export const Search = ({ className, onSelect }: ISearchProps): JSX.Element => {
           }
         },
         () => {
+          setLoading(false);
           addAlertMessages([{ type: 'error', message: 'Something went wrong fetching your location.' }]);
         },
       );

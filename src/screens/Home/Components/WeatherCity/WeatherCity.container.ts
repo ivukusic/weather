@@ -2,12 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { RootState } from 'core/MainReducer';
-import {
-  addRemoveToFavorites,
-  getWeatherDataByCity,
-  removeFromList,
-  resetList,
-} from 'library/common/actions/Weather.actions';
+import { addRemoveToFavorites, getWeatherDataByCity, removeFromList } from 'library/common/actions/Weather.actions';
 import WeatherCity from './WeatherCity.component';
 
 const mapStateToProps = ({ weatherReducer }: RootState) => ({
@@ -19,6 +14,5 @@ export default withRouter(
     addRemoveToFavorites,
     getWeatherDataByCity,
     removeFromList,
-    resetList,
   })(WeatherCity),
 );

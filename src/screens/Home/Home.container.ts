@@ -6,7 +6,6 @@ import {
   getWeatherData,
   getWeatherDataByCity,
   removeFromList,
-  resetList,
 } from 'library/common/actions/Weather.actions';
 import Home from './Home.component';
 
@@ -19,5 +18,4 @@ export default connect(mapStateToProps, {
   getWeatherData,
   getWeatherDataByCity,
   removeFromList,
-  resetList,
 })(Home);

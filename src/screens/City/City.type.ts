@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 export interface ICityTypeProps extends RouteComponentProps {
   addRemoveToFavorites: (city: string) => Promise<any>;
+  deleteNote: (city: string, index: number) => Promise<void>;
   favorites: string[];
   getWeatherDataByCity: (data: {
     city?: string;
@@ -11,6 +12,6 @@ export interface ICityTypeProps extends RouteComponentProps {
     transformCityName?: boolean;
     future?: boolean;
   }) => Promise<{ success: boolean; data?: { city: string; weather: IWeatherType } }>;
-  saveNotes: (city: string, note: string) => Promise<void>;
+  saveNotes: (city: string, note: string, index?: number | null) => Promise<void>;
   weather: { [key: string]: IWeatherType };
 }

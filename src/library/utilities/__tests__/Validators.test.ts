@@ -11,12 +11,12 @@ describe('Utilities - Validators', () => {
     });
 
     it('should validate email - expect to not be valid for invalid email', () => {
-      const valid = Validators.email('ivan.vukusic@gmail', message);
+      const valid = Validators.email('name@gmail', message);
       expect(valid).toEqual(error);
     });
 
     it('should validate email - expect to be valid', () => {
-      const valid = Validators.email('ivan.vukusic@gmail.com', message);
+      const valid = Validators.email('name@gmail.com', message);
       expect(valid).toEqual(false);
     });
   });
@@ -28,7 +28,7 @@ describe('Utilities - Validators', () => {
     });
 
     it('should validate required - expect to be valid', () => {
-      const valid = Validators.required('ivan', message);
+      const valid = Validators.required('name', message);
       expect(valid).toEqual(false);
     });
   });

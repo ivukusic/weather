@@ -14,7 +14,6 @@ const history = createMemoryHistory();
 
 const getWeatherData = jest.fn();
 const getWeatherDataByCity = jest.fn();
-const resetList = jest.fn();
 const location: any = {};
 const match: any = {};
 
@@ -26,8 +25,6 @@ const defaultProps = {
   history,
   location,
   match,
-  resetList,
-  weather: { ...dummyDataWeather },
 };
 
 /**

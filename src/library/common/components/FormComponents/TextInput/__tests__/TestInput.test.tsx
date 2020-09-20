@@ -24,8 +24,6 @@ describe('TextInput', () => {
     const screen = render(setup());
     const element = screen.getByPlaceholderText('Enter email');
     fireEvent.change(element, { target: { value: 'Text' } });
-    // expect(input.value).toBe('$23')
-    // console.log(element);
-    // expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
   });
 });
