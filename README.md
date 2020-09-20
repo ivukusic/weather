@@ -1,8 +1,6 @@
-# React Typescript Boilerplate
+# Weather APP
 
-Basic boilerplate of **create-react-app** with **typescript**. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-[Link to RULEBOOK](RULEBOOK.md) - basic rules and branching strategy for frontend application (React or similar to React Native)
+App with weather information for 15 largest cities. Add your city to favorites, or any other.
 
 ## Features
 
@@ -55,6 +53,8 @@ Basic boilerplate of **create-react-app** with **typescript**. This project was 
 └── yarn.lock
 ```
 
+[Link to RULEBOOK](RULEBOOK.md) - basic rules and branching strategy for frontend application (React or similar to React Native)
+
 ### Installation
 
 Navigate to your project root folder and run the following command:
@@ -87,3 +87,17 @@ yarn test
 yarn test:watch
 yarn test:cov
 ```
+
+### Deploy
+
+```yarn
+firebase login
+firebase deploy
+```
+
+### Screenshots
+
+<img src="./screenshots/weather-screenshot1.jpg" width="400">
+<img src="./screenshots/weather-screenshot2.jpg" width="400">
+<img src="./screenshots/weather-screenshot4.jpg" width="400">
+<img src="./screenshots/weather-screenshot3.jpg" width="400">

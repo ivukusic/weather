@@ -1,5 +1,6 @@
 {
-  "name": "react-typescript-boilerplate",
+  "name": "weather",
+  "description": "App with weather information for 15 largest cities. Add your city to favorites, or any other.",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
